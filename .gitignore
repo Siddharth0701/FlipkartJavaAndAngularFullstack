@@ -1,2 +1,5 @@
 .metadata/.plugins/org.eclipse.m2e.logback/0.log
 .metadata
+target/!.mvn/wrapper/maven-wrapper.jar
+target/!**/src/main/**/target/
+target/!**/src/test/**/target/
