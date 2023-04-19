@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
 import { CartItem } from '../common/cart-item';
-import { Subject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CartService {
   cartItems: CartItem[] = [];
-  totalPrice: Subject<number> = new Subject<number>();
-  totalQuantity: Subject<number> = new Subject<number>();
+  totalPrice: Subject<number> = new BehaviorSubject<number>(0);
+  totalQuantity: Subject<number> = new BehaviorSubject<number>(0);
   constructor() {}
   addToCart(theCartItem: CartItem) {
     //check if we already have the item in our cart
@@ -66,21 +66,20 @@ export class CartService {
     console.log('--------------------------');
   }
   decrementQuantity(theCartItem: CartItem) {
-
     theCartItem.qunatity--;
 
     if (theCartItem.qunatity === 0) {
       this.remove(theCartItem);
-    }
-    else {
+    } else {
       this.computeCartTotal();
     }
   }
 
   remove(theCartItem: CartItem) {
-
     // get index of item in the array
-    const itemIndex = this.cartItems.findIndex( tempCartItem => tempCartItem.id === theCartItem.id );
+    const itemIndex = this.cartItems.findIndex(
+      (tempCartItem) => tempCartItem.id === theCartItem.id
+    );
 
     // if found, remove the item from the array at the given index
     if (itemIndex > -1) {
